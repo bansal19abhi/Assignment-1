@@ -15,6 +15,7 @@
 		6C1BCFBA22C04FF600EA8B3B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6C1BCFB822C04FF600EA8B3B /* Main.storyboard */; };
 		6C1BCFBC22C04FF800EA8B3B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C1BCFBB22C04FF800EA8B3B /* Assets.xcassets */; };
 		6C1BCFBF22C04FF800EA8B3B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6C1BCFBD22C04FF800EA8B3B /* LaunchScreen.storyboard */; };
+		6C1BCFC722C0633E00EA8B3B /* loop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6C1BCFC622C0633E00EA8B3B /* loop.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		6C1BCFBB22C04FF800EA8B3B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6C1BCFBE22C04FF800EA8B3B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6C1BCFC022C04FF800EA8B3B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6C1BCFC622C0633E00EA8B3B /* loop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = loop.mp3; path = ../../../Downloads/loop.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 				6C1BCFB822C04FF600EA8B3B /* Main.storyboard */,
 				6C1BCFBB22C04FF800EA8B3B /* Assets.xcassets */,
 				6C1BCFBD22C04FF800EA8B3B /* LaunchScreen.storyboard */,
+				6C1BCFC622C0633E00EA8B3B /* loop.mp3 */,
 				6C1BCFC022C04FF800EA8B3B /* Info.plist */,
 			);
 			path = "assignment 1";
@@ -133,6 +136,7 @@
 			files = (
 				6C1BCFBA22C04FF600EA8B3B /* Main.storyboard in Resources */,
 				6C1BCFB122C04FF600EA8B3B /* GameScene.sks in Resources */,
+				6C1BCFC722C0633E00EA8B3B /* loop.mp3 in Resources */,
 				6C1BCFBC22C04FF800EA8B3B /* Assets.xcassets in Resources */,
 				6C1BCFBF22C04FF800EA8B3B /* LaunchScreen.storyboard in Resources */,
 				6C1BCFB322C04FF600EA8B3B /* Actions.sks in Resources */,

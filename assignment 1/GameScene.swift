@@ -22,6 +22,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didMove(to view: SKView) {
         
+        let backgroundSound = SKAudioNode(fileNamed: "loop.mp3")
+        
+        self.addChild(backgroundSound)
+        
     
         self.physicsWorld.contactDelegate = self
         self.physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
