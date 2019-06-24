@@ -29,6 +29,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var lives = 4
     
     override func didMove(to view: SKView) {
+        // background
+        
+        // Set the background color of the app
+                self.backgroundColor = SKColor.green;
+                let bgNode = SKSpriteNode(imageNamed: "background")
+                bgNode.position = CGPoint(x: -self.size.width/200, y:self.size.height/100)
+                bgNode.zPosition = -1
+                addChild(bgNode)
+        
+        
+        
+        
          // sound
         let backgroundSound = SKAudioNode(fileNamed: "loop.mp3")
         
