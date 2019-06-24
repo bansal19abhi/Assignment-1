@@ -51,7 +51,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.livesLabel.fontName = "Avenir-Bold"
         self.livesLabel.fontColor = UIColor.yellow
         self.livesLabel.fontSize = 40;
-        self.livesLabel.position = CGPoint(x:500,y:200)
+        self.livesLabel.position = CGPoint(x: -self.size.width/50,y:self.size.height/2.5)
         
         
         // MARK: Add your sprites to the screen
@@ -95,6 +95,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.lives = self.lives-1
                 
                 print("lives after collision  \(self.lives)" )
+                self.livesLabel.text = "Lives: \(self.lives)"
+                
                 
                 if (self.lives <= 0)
                 {
