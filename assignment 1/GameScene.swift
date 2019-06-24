@@ -29,8 +29,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var lives = 4
     
     override func didMove(to view: SKView) {
+         // sound
+        let backgroundSound = SKAudioNode(fileNamed: "loop.mp3")
         
-        
+        self.addChild(backgroundSound)
         // MARK: Add a lives label
         // ------------------------
         self.livesLabel.text = "Lives: \(self.lives)"
@@ -79,11 +81,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if(playerDir == "left" || playerDir == "right" || playerDir == "no movement")
             {
                 self.lives = self.lives-1
+                
+                print("lives after collision  \(self.lives)" )
+                
+                if (self.lives <= 0)
+                {
+                    print("-------- GAME LOST -----------")
+                }
+                else {
+                    print("m in else")
+                }
             }
-            nodeB?.removeFromParent()
+            else if(playerDir == "down"){
+                nodeB?.removeFromParent()
+                }
         }
         
     }
+        
+    
 
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
