@@ -26,7 +26,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
    
 
     var movingEnemyRight :Bool = true
-    var lives = 4
+    var lives = 100
     
     override func didMove(to view: SKView) {
         // background
@@ -37,6 +37,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 bgNode.position = CGPoint(x: -self.size.width/200, y:self.size.height/100)
                 bgNode.zPosition = -1
                 addChild(bgNode)
+        
+        // swipe swipe
+        
+        
+        addswipeGestureRecognisers()
+        
         
         
         
@@ -80,6 +86,59 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         
         self.makeEnemies()
+    }
+    
+    func addswipeGestureRecognisers() {
+        let gestureDirections: [UISwipeGestureRecognizer.Direction] = [.right, .left, .up, .down]
+        for gestureDirection in gestureDirections {
+            let gestureReconizer = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes))
+            gestureReconizer.direction = gestureDirection
+            self.view?.addGestureRecognizer(gestureReconizer)
+            
+        }
+    }
+    
+    @objc func handleSwipes(gesture: UIGestureRecognizer){
+        if let gesture = gesture as? UISwipeGestureRecognizer {
+            switch gesture.direction {
+            case .up:
+                print ("swiped up")
+                playerDir = "up"
+                print("UP PRESSED")
+                if(self.player.position.y <= 120)
+                {
+                    print ("height : \(self.player.position.y)")
+                    self.player.position.y = self.player.position.y + 200
+                }
+            
+            
+            case .down:
+                print ("swiped down")
+                playerDir = "down"
+                if(self.player.position.y >= -100)
+                {
+                    print ("height : \(self.player.position.y)")
+                    self.player.position.y = self.player.position.y - 200
+                }
+            
+            
+            case .right:
+                print ("swiped right")
+                playerDir = "right"
+                self.player.position.x = self.player.position.x + 50
+            
+            
+            case .left:
+                print ("swiped left")
+                playerDir = "left"
+                self.player.position.x = self.player.position.x - 50
+           
+            
+            default:
+                print("no such gesture")
+            }
+        }
+        
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -153,17 +212,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         
         
-        if (spriteTouched.name == "up") {
-            playerDir = "up"
-            print("UP PRESSED")
-            if(self.player.position.y <= 120)
-            {
-                print ("height : \(self.player.position.y)")
-                self.player.position.y = self.player.position.y + 200
-            }
-            
-            
-        }
+//        if (spriteTouched.name == "up") {
+//            playerDir = "up"
+//            print("UP PRESSED")
+//            if(self.player.position.y <= 120)
+//            {
+//                print ("height : \(self.player.position.y)")
+//                self.player.position.y = self.player.position.y + 200
+//            }
+//
+//
+//        }
         else if (spriteTouched.name == "down") {
             print("DOWN PRESSED")
             playerDir = "down"
@@ -176,12 +235,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         else if (spriteTouched.name == "left") {
             print("LEFT PRESSED")
             playerDir = "left"
-            self.player.position.x = self.player.position.x - 50
+            self.player.position.x = self.player.position.x - 1000
         }
         else if (spriteTouched.name == "right") {
             print("RIGHT PRESSED")
             playerDir = "right"
-            self.player.position.x = self.player.position.x + 50
+            self.player.position.x = self.player.position.x + 1000
         }
         
     }
@@ -193,7 +252,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //self.player.position.x = self.player.position.x + 10
         
         if (self.player.position.x >= self.size.width) {
-            self.player.position.x = 10
+            self.player.position.x = 200
         }
         if (self.player.position.x < 0) {
             self.player.position.x = self.size.width-100
