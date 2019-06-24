@@ -13,6 +13,7 @@ import GameplayKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var player:SKNode!
+    var playerDir:String = ""
     var level1 : SKNode!
     var level2 : SKNode!
     var level3 : SKNode!
@@ -72,7 +73,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let nodeB = contact.bodyB.node
         
         print("Collision detected!")
-        print("Node A: \(nodeA!.name)  Node B: \(nodeB!.name)")
+        print("Node A: \(nodeA?.name)  Node B: \(nodeB?.name)")
+        if(nodeA?.name == "player" && nodeB?.name == "enemy")
+        {
+            if(playerDir == "left" || playerDir == "right" || playerDir == "no movement")
+            {
+                self.lives = self.lives-1
+            }
+            nodeB?.removeFromParent()
+        }
+        
     }
 
     
@@ -105,6 +115,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         
         if (spriteTouched.name == "up") {
+            playerDir = "up"
             print("UP PRESSED")
             if(self.player.position.y <= 120)
             {
@@ -116,7 +127,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         else if (spriteTouched.name == "down") {
             print("DOWN PRESSED")
-            
+            playerDir = "down"
             if(self.player.position.y >= -100)
             {
                 print ("height : \(self.player.position.y)")
@@ -125,11 +136,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         else if (spriteTouched.name == "left") {
             print("LEFT PRESSED")
-            
+            playerDir = "left"
             self.player.position.x = self.player.position.x - 50
         }
         else if (spriteTouched.name == "right") {
             print("RIGHT PRESSED")
+            playerDir = "right"
             self.player.position.x = self.player.position.x + 50
         }
         
@@ -161,7 +173,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for i in 0..<lev2Enemies.count {
             //left - right
             let enemy = lev2Enemies[i]
-            enemy.position.x = enemy.position.x + 5
+            enemy.position.x = enemy.position.x + 10
             if (enemy.position.x > self.frame.width){
                 enemy.position.x = 0
             }
@@ -183,7 +195,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         // print a message every 3 seconds
         var timePassed = (currentTime - timeOfLastUpdate!)
-        if (timePassed >= 1.5) {
+        if (timePassed >= 3.5) {
             if(lev1Enemies.count <= 5 )
             {
                 print("HERE IS A MESSAGE!")
@@ -208,6 +220,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         
+        if (timePassed >= 0.5){
+            if (playerDir != "left" || playerDir != "right"){
+                playerDir = "no movement"
+            }
+        }
         
     }
     
@@ -226,7 +243,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         
         enemy.physicsBody = SKPhysicsBody(rectangleOf: enemy.size)
-        enemy.physicsBody?.isDynamic = false
+        enemy.physicsBody?.isDynamic = true
         enemy.physicsBody?.affectedByGravity = false
         enemy.physicsBody?.allowsRotation = false
         
@@ -234,6 +251,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         enemy.physicsBody?.categoryBitMask = 2
         enemy.physicsBody?.contactTestBitMask = 1
         
+        enemy.physicsBody?.collisionBitMask = 0
+        enemy.name = "enemy"
         
         addChild(enemy)
         self.lev1Enemies.append(enemy)
@@ -247,7 +266,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // setup physics for each cat
         enemy1.physicsBody = SKPhysicsBody(rectangleOf: enemy.size)
-        enemy1.physicsBody?.isDynamic = false
+        enemy1.physicsBody?.isDynamic = true
         enemy1.physicsBody?.affectedByGravity = false
         enemy1.physicsBody?.allowsRotation = false
         
@@ -255,6 +274,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         enemy1.physicsBody?.categoryBitMask = 2
         enemy1.physicsBody?.contactTestBitMask = 1
         
+        
+        enemy1.physicsBody?.collisionBitMask = 0
+        enemy1.name = "enemy"
         addChild(enemy1)
         // add enemy to level 1 array
         self.lev2Enemies.append(enemy1)
@@ -267,7 +289,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // setup physics for each cat
         enemy2.physicsBody = SKPhysicsBody(rectangleOf: enemy.size)
-        enemy2.physicsBody?.isDynamic = false
+        enemy2.physicsBody?.isDynamic = true
         enemy2.physicsBody?.affectedByGravity = false
         enemy2.physicsBody?.allowsRotation = false
         
@@ -275,6 +297,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         enemy2.physicsBody?.categoryBitMask = 2
         enemy2.physicsBody?.contactTestBitMask = 1
         
+        
+        enemy2.physicsBody?.collisionBitMask = 0
+        enemy2.name = "enemy"
         addChild(enemy2)
         // add enemy to level 1 array
         self.lev3Enemies.append(enemy2)
