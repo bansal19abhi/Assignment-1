@@ -19,12 +19,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let enemy = SKSpriteNode(imageNamed: "enemy")
     var movingEnemyRight :Bool = true
+
     
     override func didMove(to view: SKView) {
-        
-        let backgroundSound = SKAudioNode(fileNamed: "loop.mp3")
-        
-        self.addChild(backgroundSound)
         
     
         self.physicsWorld.contactDelegate = self
@@ -91,18 +88,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if (spriteTouched.name == "up") {
             print("UP PRESSED")
-            if(self.player.position.y <= self.frame.size.height-250)
+            if(self.player.position.y <= 120)
             {
-                self.player.position.y = self.player.position.y + 150
+                print ("height : \(self.player.position.y)")
+                self.player.position.y = self.player.position.y + 200
             }
             
             
         }
         else if (spriteTouched.name == "down") {
             print("DOWN PRESSED")
-            if(self.player.position.y >= 150)
+            
+            if(self.player.position.y >= -100)
             {
-                self.player.position.y = self.player.position.y - 150
+                print ("height : \(self.player.position.y)")
+                self.player.position.y = self.player.position.y - 200
             }
         }
         else if (spriteTouched.name == "left") {
@@ -172,8 +172,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func makeEnemies() {
         // lets add some enemies
         // generate a random (x,y) for the cat
-        let randX = Int(level1.position.x)
-        let randY = Int(level1.position.y + 80)
+        let randX = Int(level1.position.x )
+        let randY = Int(level1.position.y + 70)
         enemy.position = CGPoint(x:randX, y:randY)
         print("enemy position \(randX) \(randY)")
         addChild(enemy)
