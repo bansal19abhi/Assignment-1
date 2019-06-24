@@ -16,13 +16,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var level1 : SKNode!
     var level2 : SKNode!
     var level3 : SKNode!
+    var lev1Enemies:[SKSpriteNode] = []
+    var lev2Enemies:[SKSpriteNode] = []
+    var lev3Enemies:[SKSpriteNode] = []
     
-    let enemy = SKSpriteNode(imageNamed: "enemy")
-    var movingEnemyRight :Bool = true
+    let livesLabel = SKLabelNode(text: "Lives: ")
+    
+   
 
+    var movingEnemyRight :Bool = true
+    var lives = 4
     
     override func didMove(to view: SKView) {
         
+        
+        // MARK: Add a lives label
+        // ------------------------
+        self.livesLabel.text = "Lives: \(self.lives)"
+        self.livesLabel.fontName = "Avenir-Bold"
+        self.livesLabel.fontColor = UIColor.yellow
+        self.livesLabel.fontSize = 40;
+        self.livesLabel.position = CGPoint(x:500,y:200)
+        
+        
+        // MARK: Add your sprites to the screen
+        addChild(livesLabel)
     
         self.physicsWorld.contactDelegate = self
         self.physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
@@ -49,14 +67,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.makeEnemies()
     }
     
-    func moveShip (moveBy: CGFloat, forTheKey: String) {
-        let moveAction = SKAction.moveBy(x: moveBy, y: 0, duration: 1)
-        let repeatForEver = SKAction.repeatForever(moveAction)
-        let seq = SKAction.sequence([moveAction, repeatForEver])
+    func didBegin(_ contact: SKPhysicsContact) {
+        let nodeA = contact.bodyA.node
+        let nodeB = contact.bodyB.node
         
-        //run the action on your ship
-        player.run(seq, withKey: forTheKey)
+        print("Collision detected!")
+        print("Node A: \(nodeA!.name)  Node B: \(nodeB!.name)")
     }
+
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
@@ -130,53 +148,136 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.player.position.x = self.size.width-100
         }
         
-        //move enemy
-        
-        
-        if(movingEnemyRight == true)
-        {
-            let RightMoveAction = SKAction.scaleX(to: +1, duration: 0)
-            self.enemy.run(RightMoveAction)
-            enemy.position.x =     enemy.position.x + 10;
-            if(enemy.position.x >= self.frame.width)
-            {
-                movingEnemyRight = false
-            }
-        }
-        else if (movingEnemyRight == false){
-            
-            let leftMoveAction = SKAction.scaleX(to: -1, duration: 0)
-            self.enemy.run(leftMoveAction)
-            enemy.position.x =     enemy.position.x - 10;
-            if(enemy.position.x <= 0)
-            {
-                movingEnemyRight = true
+        for i in 0..<lev1Enemies.count {
+            //left - right
+            let enemy = lev1Enemies[i]
+            enemy.position.x = enemy.position.x + 10
+            if (enemy.position.x > self.frame.width){
+                enemy.position.x = 0
             }
             
         }
         
-        //        if (timeOfLastUpdate == nil) {
-        //            timeOfLastUpdate = currentTime
-        //        }
-        //        // print a message every 3 seconds
-        //        var timePassed = (currentTime - timeOfLastUpdate!)
-        //        if (timePassed >= 1.5) {
-        //            print("HERE IS A MESSAGE!")
-        //            timeOfLastUpdate = currentTime
-        //            // make a cat
-        //            self.makeEnemies()
-        //        }
-        //
+        for i in 0..<lev2Enemies.count {
+            //left - right
+            let enemy = lev2Enemies[i]
+            enemy.position.x = enemy.position.x + 5
+            if (enemy.position.x > self.frame.width){
+                enemy.position.x = 0
+            }
+            
+        }
+        
+        for i in 0..<lev3Enemies.count {
+            //left - right
+            let enemy = lev3Enemies[i]
+            enemy.position.x = enemy.position.x + 10
+            if (enemy.position.x > self.frame.width){
+                enemy.position.x = 0
+            }
+            
+        }
+        
+        if (timeOfLastUpdate == nil) {
+            timeOfLastUpdate = currentTime
+        }
+        // print a message every 3 seconds
+        var timePassed = (currentTime - timeOfLastUpdate!)
+        if (timePassed >= 1.5) {
+            if(lev1Enemies.count <= 5 )
+            {
+                print("HERE IS A MESSAGE!")
+                timeOfLastUpdate = currentTime
+                // make a cat
+                self.makeEnemies()
+            }
+            if(lev2Enemies.count <= 5 )
+            {
+                print("HERE IS A MESSAGE!")
+                timeOfLastUpdate = currentTime
+                // make a cat
+                self.makeEnemies()
+            }
+            
+            if(lev3Enemies.count <= 5 )
+            {
+                print("HERE IS A MESSAGE!")
+                timeOfLastUpdate = currentTime
+                // make a cat
+                self.makeEnemies()
+            }
+        }
+        
+        
     }
     
+    
     func makeEnemies() {
-        // lets add some enemies
-        // generate a random (x,y) for the cat
-        let randX = Int(level1.position.x )
+        
+        let enemy = SKSpriteNode(imageNamed: "enemy")
+        let enemy1 = SKSpriteNode(imageNamed: "enemy")
+        let enemy2 = SKSpriteNode(imageNamed: "enemy")
+        
+        //level 1
+        let randX = Int(level1.position.x - 70)
         let randY = Int(level1.position.y + 70)
         enemy.position = CGPoint(x:randX, y:randY)
         print("enemy position \(randX) \(randY)")
+        
+        
+        enemy.physicsBody = SKPhysicsBody(rectangleOf: enemy.size)
+        enemy.physicsBody?.isDynamic = false
+        enemy.physicsBody?.affectedByGravity = false
+        enemy.physicsBody?.allowsRotation = false
+        
+        // give him a category
+        enemy.physicsBody?.categoryBitMask = 2
+        enemy.physicsBody?.contactTestBitMask = 1
+        
+        
         addChild(enemy)
+        self.lev1Enemies.append(enemy)
+        
+        
+        // level 2
+        let randX1 = Int(level2.position.x )
+        let randY1 = Int(level2.position.y + 70)
+        enemy1.position = CGPoint(x:randX1, y:randY1)
+        print("enemy position \(randX1) \(randY1)")
+        
+        // setup physics for each cat
+        enemy1.physicsBody = SKPhysicsBody(rectangleOf: enemy.size)
+        enemy1.physicsBody?.isDynamic = false
+        enemy1.physicsBody?.affectedByGravity = false
+        enemy1.physicsBody?.allowsRotation = false
+        
+        // give him a category
+        enemy1.physicsBody?.categoryBitMask = 2
+        enemy1.physicsBody?.contactTestBitMask = 1
+        
+        addChild(enemy1)
+        // add enemy to level 1 array
+        self.lev2Enemies.append(enemy1)
+        
+            // level 3
+        let randX2 = Int(level3.position.x )
+        let randY2 = Int(level3.position.y + 70)
+        enemy2.position = CGPoint(x:randX2, y:randY2)
+        print("enemy position \(randX2) \(randX2)")
+        
+        // setup physics for each cat
+        enemy2.physicsBody = SKPhysicsBody(rectangleOf: enemy.size)
+        enemy2.physicsBody?.isDynamic = false
+        enemy2.physicsBody?.affectedByGravity = false
+        enemy2.physicsBody?.allowsRotation = false
+        
+        // give him a category
+        enemy2.physicsBody?.categoryBitMask = 2
+        enemy2.physicsBody?.contactTestBitMask = 1
+        
+        addChild(enemy2)
+        // add enemy to level 1 array
+        self.lev3Enemies.append(enemy2)
         
     }
     
