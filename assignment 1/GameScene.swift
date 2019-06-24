@@ -87,9 +87,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if (self.lives <= 0)
                 {
                     print("-------- GAME LOST -----------")
+                    let scene = SKScene(fileNamed:"GameOver")
+                    if (scene == nil) {
+                        print("Error loading level")
+                        return
+                    }
+                    else {
+                        scene!.scaleMode = .aspectFill
+                        view?.presentScene(scene!)
+                    }
                 }
                 else {
-                    print("m in else")
+                    print("....")
                 }
             }
             else if(playerDir == "down"){
