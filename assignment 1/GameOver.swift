@@ -64,7 +64,7 @@ class GameOver: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let PlayGameScene = GameScene(fileNamed: "GameScene")
+        let PlayGameScene = GameScene(fileNamed: "GamScene")
         PlayGameScene?.scaleMode = .aspectFill
         self.view?.presentScene(PlayGameScene!, transition: SKTransition.fade(withDuration: 1.0))
         

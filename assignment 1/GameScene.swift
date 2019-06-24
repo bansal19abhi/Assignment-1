@@ -22,11 +22,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var lev3Enemies:[SKSpriteNode] = []
     
     let livesLabel = SKLabelNode(text: "Lives: ")
+    let ScoreLabel = SKLabelNode(text: "Score: ")
     
    
 
     var movingEnemyRight :Bool = true
-    var lives = 100
+    var lives = 10
+    var score = 0
     
     override func didMove(to view: SKView) {
         // background
@@ -84,6 +86,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.player.run(SKAction.repeatForever(walkingAnimation))
         
+        
+        // MARK: Add a lives label
+        // ------------------------
+        self.ScoreLabel.text = "Score: \(self.score)"
+        self.ScoreLabel.fontName = "Avenir-Bold"
+        self.ScoreLabel.fontColor = UIColor.yellow
+        self.ScoreLabel.fontSize = 40;
+        self.ScoreLabel.position = CGPoint(x: -self.size.width/50,y:self.size.height/5)
+        
+        
+        // MARK: Add your sprites to the screen
+        addChild(ScoreLabel)
         
         self.makeEnemies()
     }
@@ -176,10 +190,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             else if(playerDir == "down"){
                 nodeB?.removeFromParent()
+                self.score = self.score + 1
+                
+                print("SCORE  \(self.score)" )
+                self.ScoreLabel.text = "SCORE: \(self.score)"
+                
+                if(self.score == 10)
+                {
+                    print("All enemies died")
+                    
+                    }
+                    else {
+                    print("....")
+                    }
+                }
+                else{
+                    print("...")
+                    
+                }
                 }
         }
         
-    }
+    
         
     
 
