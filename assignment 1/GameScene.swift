@@ -212,17 +212,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         
         
-//        if (spriteTouched.name == "up") {
-//            playerDir = "up"
-//            print("UP PRESSED")
-//            if(self.player.position.y <= 120)
-//            {
-//                print ("height : \(self.player.position.y)")
-//                self.player.position.y = self.player.position.y + 200
-//            }
-//
-//
-//        }
+        if (spriteTouched.name == "up") {
+            playerDir = "up"
+            print("UP PRESSED")
+            if(self.player.position.y <= 120)
+            {
+                print ("height : \(self.player.position.y)")
+                self.player.position.y = self.player.position.y + 200
+            }
+
+
+        }
         else if (spriteTouched.name == "down") {
             print("DOWN PRESSED")
             playerDir = "down"
